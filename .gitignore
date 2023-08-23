@@ -1,3 +1,9 @@
 .vscode/
 data/
 venv/
+wandb/
+*.tiff
+ckpts
+*.txt
+*.jpg
+**/improved-diffusion/
