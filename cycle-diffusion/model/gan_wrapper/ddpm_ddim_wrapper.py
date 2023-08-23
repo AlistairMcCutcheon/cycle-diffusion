@@ -451,6 +451,9 @@ class DDPMDDIMWrapper(torch.nn.Module):
             self.learn_sigma = False
             self.logvar = np.log(np.maximum(posterior_variance, 1e-20))
             print("Improved diffusion Model loaded.")
+        elif config.data.dataset == "DFire":
+            print(f"config: {config}")
+            self.generator = i_DDPM(config.data.dataset)
         else:
             print("Not implemented dataset")
             raise NotImplementedError()

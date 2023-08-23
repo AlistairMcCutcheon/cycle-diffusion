@@ -21,6 +21,25 @@ AFHQ_DICT = dict(
     use_new_attention_order=False,
 )
 
+DFIRE_DICT = dict(
+    attention_resolutions="16,8",
+    class_cond=False,
+    dropout=0.0,
+    image_size=64,
+    learn_sigma=True,
+    num_channels=128,
+    # num_head_channels=64,
+    num_res_blocks=3,
+    # resblock_updown=True,
+    use_fp16=False,
+    use_scale_shift_norm=True,
+    num_heads=4,
+    # num_heads_upsample=-1,
+    channel_mult="",
+    use_checkpoint=True,
+    # use_new_attention_order=False,
+)
+
 
 IMAGENET_DICT = dict(
     attention_resolutions="32,16,8",
@@ -69,6 +88,7 @@ def create_model(
             channel_mult = (1, 1, 2, 3, 4)
         elif image_size == 64:
             channel_mult = (1, 2, 3, 4)
+
         else:
             raise ValueError(f"unsupported image size: {image_size}")
     else:
@@ -99,11 +119,13 @@ def create_model(
     )
 
 
-def i_DDPM(dataset_name = 'AFHQ'):
-    if dataset_name in  ['AFHQ', 'FFHQ']:
+def i_DDPM(dataset_name="AFHQ"):
+    if dataset_name in ["AFHQ", "FFHQ"]:
         return create_model(**AFHQ_DICT)
-    elif dataset_name == 'IMAGENET':
+    elif dataset_name == "IMAGENET":
         return create_model(**IMAGENET_DICT)
+    elif dataset_name == "DFire":
+        return create_model(**DFIRE_DICT)
     else:
-        print('Not implemented.')
+        print("Not implemented.")
         exit()
