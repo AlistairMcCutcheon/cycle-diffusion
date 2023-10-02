@@ -177,7 +177,9 @@ def denoising_step_with_eps(
         if et.shape != xt.shape:
             et, model_var_values = torch.split(et, et.shape[1] // 2, dim=1)
         if learn_sigma:
-            et, model_var_values = torch.split(et, et.shape[1] // 2, dim=1)
+            # print(et.shape)
+            # print(torch.split(et, et.shape[1] // 2, dim=1))
+            et, model_var_values, _ = torch.split(et, et.shape[1] // 2, dim=1)
             # calculations for posterior q(x_{t-1} | x_t, x_0)
             bt = extract(b, t, xt.shape)
             at = extract(
@@ -453,6 +455,8 @@ class DDPMDDIMWrapper(torch.nn.Module):
             print("Improved diffusion Model loaded.")
         elif config.data.dataset == "DFire":
             print(f"config: {config}")
+            self.learn_sigma = True
+            self.logvar = np.log(np.maximum(posterior_variance, 1e-20))
             self.generator = i_DDPM(config.data.dataset)
         else:
             print("Not implemented dataset")
