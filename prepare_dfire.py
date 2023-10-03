@@ -15,7 +15,6 @@ class Class(Enum):
 
 
 def get_smoky_and_non_smokey_imgs(root_dir_path: str):
-    print(root_dir_path)
     all_img_paths = set()
     smokey_img_paths = set()
     firey_img_paths = set()
