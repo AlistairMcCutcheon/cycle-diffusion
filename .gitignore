@@ -5,6 +5,5 @@ wandb/
 *.tiff
 *.pt
 *.ckpt
-*.txt
 *.jpg
 **/improved-diffusion/
