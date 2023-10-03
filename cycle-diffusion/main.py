@@ -126,15 +126,12 @@ def main():
         trainer.save_state()
 
     # Evaluation after training
-    logger.info("*** Evaluate ***")
+    # logger.info("*** Evaluate ***")
 
-    metrics = trainer.evaluate(
-        metric_key_prefix="eval",
-    )
-    metrics["eval_samples"] = len(dataset_splits["dev"])
-
-    trainer.log_metrics("eval", metrics)
-    trainer.save_metrics("eval", metrics)
+    # metrics = trainer.evaluate(
+    #     metric_key_prefix="eval",
+    # )
+    # metrics["eval_samples"] = len(dataset_splits["dev"])
 
     # Test
     if training_args.do_predict:
