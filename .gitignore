@@ -3,7 +3,8 @@ data/
 venv/
 wandb/
 *.tiff
-ckpts
+*.pt
+*.ckpt
 *.txt
 *.jpg
 **/improved-diffusion/
