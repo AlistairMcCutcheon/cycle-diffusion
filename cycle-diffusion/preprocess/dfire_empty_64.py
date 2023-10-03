@@ -4,6 +4,7 @@ from torch.utils.data import Dataset
 from PIL import Image
 import numpy as np
 from utils.file_utils import list_image_files_recursively
+from torchvision import transforms
 
 
 class Preprocessor(object):
@@ -40,7 +41,12 @@ class TrainDataset(Dataset):
 class DevDataset(Dataset):
     def __init__(self, args, meta_args, raw_datasets, cache_root):
         self.root_dir = "../data/DFire/clean/test/empty"
-
+        self.transform = transforms.Compose(
+            [
+                # transforms.Resize(256, interpolation=INTERPOLATION),  # 512 -> 256
+                transforms.ToTensor()
+            ]
+        )
         self.file_names = list_image_files_recursively(self.root_dir)
 
         self.data = [
@@ -58,8 +64,9 @@ class DevDataset(Dataset):
         data = {k: v for k, v in self.data[index].items()}
 
         # Add image.
-        img = np.array(Image.open(data["file_name"])).transpose(2, 0, 1)
-
+        img = np.array(Image.open(data["file_name"]))
+        img = self.transform(img) * 255
+        print(img)
         # Add image.
         data["original_image"] = img
         data["model_kwargs"] = data["model_kwargs"] + [
@@ -69,5 +76,5 @@ class DevDataset(Dataset):
         return data
 
     def __len__(self):
-        return len(self.data)
-        # return 4
+        # return len(self.data)
+        return 16
